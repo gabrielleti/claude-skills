@@ -1,0 +1,71 @@
+# Persönlicher Kontext (Vorlage)
+
+> **Diese Datei als `user-context.local.md` kopieren** (ohne `.example`-Suffix).
+> Alle `*.local.md`-Dateien sind in `.gitignore` und werden **nicht** gepusht.
+
+Inhalt hilft Claude, Antworten passgenauer zu geben. Je konkreter, desto besser.
+
+---
+
+## Steuerlicher Status
+
+- **Primäre Einkunftsart:** Angestellt (Dienstnehmer) / Selbständig / Vermieter / Kapitalanleger / Kombination
+- **Bundesland & zuständiges Finanzamt:** z. B. Wien, Finanzamt Österreich Dienststelle Wien 1/23
+- **Steuerliche Vertretung:** Steuerberater*in ja/nein
+- **Familienstand:** ledig / verheiratet / eingetragene Partnerschaft / geschieden
+- **Kinder:** Anzahl + Alter, Familienbeihilfe-Anspruch, Aufteilung Familienbonus
+
+## Angestellt (wenn zutreffend)
+
+- **Arbeitgeber / Branche:** z. B. IT, Medienfirma
+- **Beschäftigungsausmaß:** 40h / Teilzeit %
+- **Arbeitsort:** z. B. 1030 Wien / Hybrid / Vollremote
+- **Entfernung Wohnung–Arbeit:** X km einfach, öffentlicher Verkehr zumutbar? (Pendlerrechner-Ergebnis)
+- **Homeoffice-Tage pro Jahr:** ca. X
+- **Jährliches Bruttoeinkommen:** für Tarifstufen-Einschätzung (grob reicht)
+
+## Typische Absetzungen (was ich jedes Jahr geltend mache)
+
+- [ ] Pendlerpauschale (klein/groß)
+- [ ] Homeoffice-Pauschale
+- [ ] Gewerkschaftsbeitrag
+- [ ] Kirchenbeitrag
+- [ ] Fachliteratur / Fortbildung
+- [ ] IT-Equipment (Laptop, Monitor)
+- [ ] Spenden
+- [ ] ...
+
+## Selbständig (wenn zutreffend)
+
+- **Tätigkeit:** z. B. Freelance-Softwareentwicklung
+- **Umsatz (ca.):** Einordnung Kleinunternehmer?
+- **Kleinunternehmer-Regelung:** ja/nein, Verzicht auf KU-Regelung?
+- **Pauschalierung oder vollständige EAR?**
+- **SVS-Status:** ja, seit ...
+
+## Vermietung (wenn zutreffend)
+
+- **Anzahl Objekte:**
+- **Art:** Eigentumswohnung / Haus / Geschäftslokal
+- **Anschaffungsjahr:**
+- **Letzte größere Sanierung:**
+- **Hausverwaltung ja/nein:**
+
+## Kapitalerträge (wenn zutreffend)
+
+- **Depotbanken:** inländisch (KESt automatisch) / ausländisch (z. B. Interactive Brokers)
+- **Krypto:** ja/nein, welche Börsen, Portfolio-Tool (Blockpit etc.)
+
+## Besonderheiten
+
+- z. B. Behinderung (Grad %)
+- Auswärtige Berufsausbildung Kinder
+- Pflegebedarf im Familienumfeld
+- Aktuelle / laufende Beschwerde
+- Gesundheitsbedingte Diätverpflegung
+
+## Erinnerungs-Stichpunkte für Claude
+
+- "Erinnere mich immer daran, den Pendlerrechner aktuell zu halten."
+- "Wenn ich über Software / SaaS-Abos rede, prüf Werbungskosten-Absetzbarkeit."
+- "..."

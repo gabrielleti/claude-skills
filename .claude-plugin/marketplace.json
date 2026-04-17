@@ -1,0 +1,31 @@
+{
+  "name": "gabrielleti",
+  "owner": {
+    "name": "gabrielleti"
+  },
+  "metadata": {
+    "description": "Gabriel Danilet's Claude Code Skills — gebündelter Marketplace",
+    "version": "0.1.0",
+    "repository": "https://github.com/gabrielleti/claude-skills"
+  },
+  "plugins": [
+    {
+      "name": "austrian-tax-deductions",
+      "description": "Österreichische Steuerabsetzungen: ArbeitnehmerInnenveranlagung (L1), Selbständige (E1/E1a), Vermietung & Verpachtung (E1b), Kapitalerträge (E1kv). Wissen aus bmf.gv.at, arbeiterkammer.at und RIS; mit FinanzOnline-Walkthroughs.",
+      "source": "./plugins/austrian-tax-deductions",
+      "strict": false,
+      "skills": [
+        "./skills/austrian-tax-deductions"
+      ]
+    },
+    {
+      "name": "apple-dev-docs-and-principles",
+      "description": "Zwingt Claude, sich bei Apple-Plattform-Arbeit (SwiftUI, UIKit, AppKit, Swift, Xcode, ARKit, RealityKit, StoreKit, SwiftData, HealthKit, WidgetKit, Live Activities, iOS/iPadOS/macOS/watchOS/tvOS/visionOS) wie ein Senior Apple Engineer zu verhalten: keine API aus dem Gedächtnis, live developer.apple.com Docs via MCP, strikte HIG/Accessibility/App-Store-Review-Compliance.",
+      "source": "./plugins/apple-dev-docs-and-principles",
+      "strict": false,
+      "skills": [
+        "./skills/apple-dev-docs-and-principles"
+      ]
+    }
+  ]
+}

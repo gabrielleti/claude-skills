@@ -1,0 +1,24 @@
+{
+  "skill_name": "austrian-tax-deductions",
+  "_comment": "Test-Prompts im Stil wie du wirklich fragen würdest. Gabriel füllt das aus — je realistischer (inkl. Umgangssprache, Typos, unvollständige Infos), desto besser die spätere Evaluation.",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "TODO: Realistische Dienstnehmer-Frage (z.B. Pendler / Homeoffice / Fortbildung)",
+      "expected_output": "Antwort mit §-Verweis, Kennzahl für L1, Live-Fetch-Vermerk, Haftungshinweis",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "TODO: Realistische Frage zu Absetzbeträgen / Familienbonus / AVAB",
+      "expected_output": "Antwort erklärt Aufteilung, nennt L1k, Einkommensgrenzen, verweist auf betraege-2026.md mit Live-Check",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "TODO: Realistische FinanzOnline-Navigation-Frage (Wo trage ich X ein? / Bescheid prüfen)",
+      "expected_output": "Antwort nennt exakten Menüpfad + Kennzahl, Verweis auf finanzonline-guides.md",
+      "files": []
+    }
+  ]
+}
