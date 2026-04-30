@@ -27,11 +27,11 @@ Quick Notes (To-Dos, kurze interne Memos) sind ausgenommen.
 
 ## Konfiguration
 
-Default-Werte (Casa de Padel) sind in `skills/casa-de-padel-doc/config.json`. Für eigene Marke:
+Default-Preset (Casa de Padel) ist in `skills/casa-de-padel-doc/config.casa-de-padel.json` (committed). Aktive Konfiguration ist `skills/casa-de-padel-doc/config.json` (lokal, gitignored — wird nicht committed). Für eigene Marke:
 
-1. `config.example.json` → `config.json` kopieren
+1. `config.casa-de-padel.json` → `config.json` kopieren (oder starte von `config.example.json` für komplett neue Marken)
 2. Werte ersetzen: `company_name`, `wordmark_text`, `shareholders`, `legal_form`, `logo_path`, ggf. Farben
-3. Logo-Datei in `skills/casa-de-padel-doc/assets/logo.png` ablegen
+3. Logo-Datei in `skills/casa-de-padel-doc/assets/logo.png` ablegen (Default-Logo bei Fork ersetzen)
 
 ## Trigger-Begriffe
 
@@ -45,13 +45,14 @@ plugins/casa-de-padel-doc/
 ├── evals/                               ← (optional) Test-Cases
 └── skills/casa-de-padel-doc/
     ├── SKILL.md                         ← Haupt-Skill (parametrisiert)
-    ├── config.json                      ← aktive Konfiguration (Casa de Padel)
-    ├── config.example.json              ← leeres Template für Forks
+    ├── config.casa-de-padel.json        ← committed Default-Preset (Casa de Padel)
+    ├── config.json                      ← aktive Konfiguration (lokal, gitignored)
+    ├── config.example.json              ← leeres Template für komplett neue Marken
     ├── references/
     │   ├── cover-page-reference.md      ← detaillierte Layout-Spec
     │   └── document-types.md            ← Subtitles & Voice pro Typ
     └── assets/
-        └── (logo.png)                   ← User-Asset, nicht committed
+        └── logo.png                     ← Casa-de-Padel-Default-Logo, bei Fork ersetzen
 ```
 
 ## Referenzdokument (Gold-Standard)

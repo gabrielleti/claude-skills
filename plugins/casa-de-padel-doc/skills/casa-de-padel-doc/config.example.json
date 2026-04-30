@@ -1,5 +1,4 @@
 {
-  "$schema": "./config.schema.json",
   "_comment": "Beispiel-Konfiguration zum Anpassen für andere Marken. Felder mit '...' ausfüllen.",
   "brand": {
     "company_name": "...",

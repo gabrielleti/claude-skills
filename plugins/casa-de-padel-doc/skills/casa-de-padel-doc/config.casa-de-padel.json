@@ -1,5 +1,4 @@
 {
-  "$schema": "./config.schema.json",
   "_comment": "Default-Konfiguration für Casa de Padel. Für andere Marken: Werte ersetzen.",
   "brand": {
     "company_name": "Casa de Padel",

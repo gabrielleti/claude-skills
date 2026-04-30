@@ -4,3 +4,7 @@ node_modules/
 .env
 .env.local
 **/user-context.local.md
+
+# Per-skill local config (user-specific, not for distribution)
+plugins/*/skills/*/config.json
+plugins/*/skills/*/config.local.json

@@ -1,6 +1,6 @@
 ---
 name: casa-de-padel-doc
-description: Document template and visual style standard for ALL Casa de Padel deliverables. Use when creating, drafting, or updating any DOCX, PPTX, or PDF for Casa de Padel — Bankdossiers, Kreditanträge, Investorenpräsentationen, AWS-Förderanträge, Verträge, Businesspläne, Reports, Analysen, Memos. NOT for quick scratch notes, single-line to-dos, or temporary internal sketches. Triggers on "Casa de Padel" + "Dokument", "Bankdossier", "Kreditantrag", "Investoren", "Förderantrag", "Businessplan", "Report", "Analyse", "Vertrag", "Pitchdeck", "Präsentation". Reads brand identity values from sibling config.json.
+description: Document template and visual style standard for ALL Casa de Padel deliverables. Use when creating, drafting, or updating any DOCX, PPTX, or PDF for Casa de Padel — Bankdossiers, Kreditanträge, Investorenpräsentationen, AWS-Förderanträge, Verträge, Businesspläne, Reports, Analysen, Memos. NOT for quick scratch notes, single-line to-dos, or temporary internal sketches. Triggers on "Casa de Padel" + "Dokument", "Bankdossier", "Kreditantrag", "Investoren", "Förderantrag", "Businessplan", "Report", "Analyse", "Vertrag", "Pitchdeck", "Präsentation".
 ---
 
 # Casa de Padel — Dokument-Skill (Parametrisiert)
@@ -21,7 +21,7 @@ Dieser Skill regelt **Aussehen und Aufbau** aller Casa de Padel Dokumente. Er is
     "company_name": "Casa de Padel",
     "wordmark_text": "CASA DE PADEL",
     "tagline_separator": "━━━━━━━━━━",
-    "logo_path": "/path/to/LOGO.png"
+    "logo_path": "./assets/logo.png"
   },
   "entity": {
     "shareholders": "Gabriel Danilet & Matthias Danilet",
@@ -62,9 +62,16 @@ Dieser Skill regelt **Aussehen und Aufbau** aller Casa de Padel Dokumente. Er is
 }
 ```
 
-Wenn `config.json` fehlt oder Felder leer sind, **frage den User** statt zu raten.
+Wenn `config.json` fehlt → lade `config.casa-de-padel.json` als Fallback-Preset und informiere den User, dass er für seine eigene Marke einen lokalen `config.json` anlegen soll (Kopie von `config.casa-de-padel.json` editieren). Wenn einzelne Felder leer sind, **frage den User** statt zu raten.
 
 In den folgenden Sektionen werden Werte als `{config.X.Y}` referenziert. Beim Anwenden mit den tatsächlichen Werten aus `config.json` ersetzen.
+
+---
+
+## Weiterführende Referenzen
+
+- `references/cover-page-reference.md` — detaillierte Cover-Layout-Spec inkl. EMU-Werten und DOCX-XML-Pattern
+- `references/document-types.md` — Subtitles, Tone und Inhaltsstruktur pro Dokumenttyp
 
 ---
 
@@ -75,7 +82,7 @@ In den folgenden Sektionen werden Werte als `{config.X.Y}` referenziert. Beim An
 Wende **alles** in diesem Skill an, wenn das Dokument:
 
 - länger als ~1 Seite ist, ODER
-- formellen Inhalt hat (Bankdossier, Kreditantrag, Vertrag, AWS-Antrag, Businessplan, Investorenmaterial, offizielle Korrespondenz, Pitch Deck, Investitionsanalyse, Bewertung, Report, Präsentation), ODER
+- formellen Inhalt hat (Bankdossier, Kreditantrag, Vertrag, AWS-Antrag, Businessplan, Investorenmaterial, offizielle Korrespondenz, Pitchdeck, Investitionsanalyse, Bewertung, Report, Präsentation), ODER
 - nach außen geht (Banken, Behörden, Investoren, Partner, Vermieter, Berater, Kunden in formaler Funktion).
 
 ### Ausgenommen — Quick Notes
@@ -136,7 +143,7 @@ Im Zweifel: Frag den User. Default ist "anwenden".
 │        [{config.brand.logo_path}]   │   ← zentriert, ~5cm breit
 │                                     │
 │                                     │
-│     {config.brand.wordmark_text}    │   ← Arial Bold {h1+12=28}pt {wordmark_color}
+│     {config.brand.wordmark_text}    │   ← Arial Bold {config.typography.wordmark_pt}pt {wordmark_color}
 │     {config.brand.tagline_sep}      │   ← Casa Red, 14pt
 │         {Subtitle}                  │   ← Arial 18pt {primary_red}
 │                                     │
@@ -168,7 +175,7 @@ Im Zweifel: Frag den User. Default ist "anwenden".
 
 | Element | Beispiel | Wer entscheidet |
 |---|---|---|
-| Subtitle | "Bankdossier & Detailanalysen" / "Investitionsanalyse" / "Pitch Deck" | aus Dokumenttyp ableiten |
+| Subtitle | "Bankdossier & Detailanalysen" / "Investitionsanalyse" / "Pitchdeck" | aus Dokumenttyp ableiten |
 | Beschreibung | "Kreditantrag für den Kauf und Umbau einer Indoor-Padel-Anlage in Rotenturm an der Pinka" | aus Dokumentinhalt ableiten — ein Satz, präzise |
 | Datum | "Erstellt: März 2026" — Monat ausgeschrieben + Jahr | aktuelles Datum |
 
@@ -288,8 +295,8 @@ Für Gesamtinvestition, ROI etc.:
 
 1. **`config.json` laden** — wenn fehlt: stoppen und User fragen
 2. **Klassifizieren** — Quick Note → Skill nicht anwenden. Substanzielles Dokument → weiter
-3. **Dokumenttyp identifizieren** (Bankdossier / Kreditantrag / Pitch / Vertrag / Report / etc.)
-4. **Voice/Tone wählen** passend zum Typ (formell/Sie für Banken, energetisch für Pitches)
+3. **Dokumenttyp identifizieren** (Bankdossier / Kreditantrag / Pitchdeck / Vertrag / Report / etc.)
+4. **Voice/Tone wählen** passend zum Typ (formell/Sie für Banken, energetisch für Pitchdecks)
 5. **Cover Page bauen** mit allen vier Pflichtelementen (§3) — Subtitle/Beschreibung aus Dokumentinhalt ableiten
 6. **Inhalt strukturieren** mit Heading-Hierarchie (§4) und Body-Regeln (§5)
 7. **Tabellen** nach §6 stylen
@@ -304,11 +311,14 @@ Bei fehlenden Werten: **fragen** — nicht raten.
 
 Dieser Skill ist für jede kleine GmbH adaptierbar:
 
-1. `config.example.json` nach `config.json` kopieren
-2. Werte ersetzen: `company_name`, `wordmark_text`, `shareholders`, `legal_form`, `logo_path`, Farb-Hex-Codes
-3. Fertig — Skill funktioniert mit deiner Marke
+1. Forke das Plugin
+2. Kopiere `config.casa-de-padel.json` zu `config.json`
+3. Editiere die Werte (`brand`, `typography`, `colors`, `entity`, `language`, …)
+4. Fertig — `config.json` wird automatisch nicht committed (gitignored), deine Marken-Werte bleiben lokal
 
-Default-Konfiguration ist Casa de Padel.
+Alternativ: starte von `config.example.json` für komplett neue Marken ohne Casa-de-Padel-Defaults.
+
+Default-Preset ist `config.casa-de-padel.json` (committed); aktive Konfiguration ist `config.json` (lokal, gitignored).
 
 ---
 
