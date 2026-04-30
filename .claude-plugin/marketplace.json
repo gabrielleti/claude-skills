@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Gabriel Danilet's Claude Code Skills — gebündelter Marketplace",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "repository": "https://github.com/gabrielleti/claude-skills"
   },
   "plugins": [
@@ -25,6 +25,15 @@
       "strict": false,
       "skills": [
         "./skills/apple-dev-docs-and-principles"
+      ]
+    },
+    {
+      "name": "casa-de-padel-doc",
+      "description": "Document template & visual style standard für alle Casa-de-Padel-Deliverables (Bankdossiers, Kreditanträge, Investorenpräsentationen, AWS-Förderanträge, Verträge, Reports) — DOCX/PPTX/PDF. Parametrisiert via config.json: Cover Page mit Logo, Wortmarke, Vertraulich-Notice, Gesellschafter & Rechtsform; Markenfarben (Casa Red #C62828, Court Blue #2244CC), Arial-Typografie, Tabellen-Styling, Du/Sie-Matrix. Adaptierbar für eigene Marken via config-Edit.",
+      "source": "./plugins/casa-de-padel-doc",
+      "strict": false,
+      "skills": [
+        "./skills/casa-de-padel-doc"
       ]
     }
   ]

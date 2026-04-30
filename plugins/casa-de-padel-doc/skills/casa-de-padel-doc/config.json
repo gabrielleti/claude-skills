@@ -1,0 +1,58 @@
+{
+  "$schema": "./config.schema.json",
+  "_comment": "Default-Konfiguration für Casa de Padel. Für andere Marken: Werte ersetzen.",
+  "brand": {
+    "company_name": "Casa de Padel",
+    "wordmark_text": "CASA DE PADEL",
+    "tagline_separator": "━━━━━━━━━━",
+    "logo_path": "./assets/logo.png"
+  },
+  "entity": {
+    "shareholders": "Gabriel Danilet & Matthias Danilet",
+    "legal_form": "GmbH (in Gründung)",
+    "confidentiality_notice": "VERTRAULICH — NUR FÜR DEN INTERNEN GEBRAUCH",
+    "confidentiality_disclaimer": "Dieses Dokument enthält geschäftsvertrauliche Informationen und darf ohne ausdrückliche Zustimmung der Gesellschafter nicht an Dritte weitergegeben werden."
+  },
+  "colors": {
+    "primary_red": "#C62828",
+    "heading_red": "#CC0000",
+    "secondary_blue": "#2244CC",
+    "tertiary_dark": "#2D2D2D",
+    "wordmark_color": "#1B1B1B",
+    "body_black": "#000000",
+    "mid_grey": "#555555",
+    "soft_grey": "#777777",
+    "disclaimer_grey": "#999999",
+    "table_wash": "#FBE9E7",
+    "accent_cell_dark": "#37474F",
+    "positive_green": "#2E7D32",
+    "white": "#FFFFFF"
+  },
+  "typography": {
+    "primary_font": "Arial",
+    "fallback_fonts": ["Helvetica", "sans-serif"],
+    "body_pt": 10,
+    "wordmark_pt": 28,
+    "h1_pt": 16,
+    "h2_pt": 13,
+    "h3_pt": 12
+  },
+  "language": {
+    "primary": "de-AT",
+    "currency_format": "EUR {amount}",
+    "thousands_separator": ".",
+    "decimal_separator": ","
+  },
+  "terminology": {
+    "must_use": [
+      { "term": "Padel", "instead_of": ["Paddle", "Paddel"] },
+      { "term": "Court", "instead_of": ["Platz", "Feld"] },
+      { "term": "Casa de Padel", "instead_of": ["CDP", "CasaDePadel"] }
+    ],
+    "avoid": [
+      { "term": "Paddle", "reason": "Falsche Schreibweise" },
+      { "term": "Tennishalle", "reason": "Verwechslungsgefahr" },
+      { "term": "Billig", "reason": "Klingt minderwertig", "use_instead": "Erschwinglich" }
+    ]
+  }
+}
