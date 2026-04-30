@@ -1,0 +1,40 @@
+{
+  "_comment": "Cowork-Overlay-Config — wird ZUSÄTZLICH zu config.casa-de-padel.json (oder config.json) geladen, wenn Claude in Cowork läuft. Enthält nur Felder, die sich von den lokalen Defaults unterscheiden.",
+  "_environment": "cowork",
+  "_loaded_after": "config.casa-de-padel.json",
+  "_see_also": "references/cowork-workflow.md",
+
+  "output": {
+    "directory": ".",
+    "directory_strategy": "cwd",
+    "filename_template": "{company_short}_{document_type}_{YYYY-MM}.{ext}",
+    "company_short": "Casa_de_Padel"
+  },
+
+  "execution": {
+    "pdf_export_allowed": false,
+    "pdf_export_reason": "Cowork-Sandbox hat kein Arial; PDF-Render würde DejaVu Sans/Liberation Sans einbrennen — nicht banktauglich. User exportiert PDF lokal aus DOCX/PPTX.",
+    "pdf_override_filename_suffix": "_PREVIEW_only",
+    "python_libs_required": ["python-docx>=1.1.0", "python-pptx>=0.6.23"],
+    "auto_install_libs": true,
+    "skip_local_only_steps": ["schwarz_weiss_test", "graustufen_vorschau"]
+  },
+
+  "asset_resolution": {
+    "logo_path_strategy": "memory_embed",
+    "logo_path_resolution_order": [
+      "${CLAUDE_PLUGIN_ROOT}/skills/casa-de-padel-doc/assets/logo.png",
+      "find ~/.claude/plugins -name 'logo.png' -path '*casa-de-padel-doc*' | head -1",
+      "ask_user"
+    ],
+    "embed_method": "BytesIO_stream",
+    "fresh_stream_per_call": true,
+    "fallback_on_embed_failure": "ask_user_before_copy",
+    "forbidden": [
+      "copy_to_cwd",
+      "external_xml_link_reference",
+      "url_or_http_embed"
+    ],
+    "_note": "Logo wird einmal in Bytes gelesen, pro python-docx/pptx add_picture-Aufruf neuer BytesIO-Stream. Siehe references/cowork-workflow.md §4 für Code-Beispiele."
+  }
+}

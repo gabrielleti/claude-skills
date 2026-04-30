@@ -64,6 +64,8 @@ Dieser Skill regelt **Aussehen und Aufbau** aller Casa de Padel Dokumente. Er is
 
 Wenn `config.json` fehlt → lade `config.casa-de-padel.json` als Fallback-Preset und informiere den User, dass er für seine eigene Marke einen lokalen `config.json` anlegen soll (Kopie von `config.casa-de-padel.json` editieren). Wenn einzelne Felder leer sind, **frage den User** statt zu raten.
 
+**Cowork-Mode**: Wenn das aktuelle Arbeitsverzeichnis nicht unter `/Users/...` oder `/home/<user>/...` liegt (sondern z.B. `/workspace`, `/app`, `/tmp/...`), läuft Claude wahrscheinlich in Anthropics Cowork-Sandbox. Dann **zusätzlich** `config.cowork.json` als Overlay laden (Cowork-Overrides für Output-Pfade, PDF-Verbot, Library-Setup) und die Anweisungen aus `references/cowork-workflow.md` befolgen. Im Zweifel User fragen.
+
 In den folgenden Sektionen werden Werte als `{config.X.Y}` referenziert. Beim Anwenden mit den tatsächlichen Werten aus `config.json` ersetzen.
 
 ---
@@ -72,6 +74,7 @@ In den folgenden Sektionen werden Werte als `{config.X.Y}` referenziert. Beim An
 
 - `references/cover-page-reference.md` — detaillierte Cover-Layout-Spec inkl. EMU-Werten und DOCX-XML-Pattern
 - `references/document-types.md` — Subtitles, Tone und Inhaltsstruktur pro Dokumenttyp
+- `references/cowork-workflow.md` — Cowork-spezifischer Workflow (Output-Pfade, PDF-Verbot, Schriftart-Handling, Logo-Resolution, Python-Setup) — nur lesen, wenn Cowork-Mode erkannt
 
 ---
 
