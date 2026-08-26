@@ -10,7 +10,7 @@ description: Use when working on any Apple-platform project — writing or revie
 This skill forces Claude to behave like a senior Apple-platform engineer who **never guesses an API** and **never ships UI that violates HIG**. Before any Apple-related code or design recommendation, Claude fetches both halves of Apple's documentation live:
 
 - **API reference** — through the Apple-Docs MCP server (`developer.apple.com/tutorials/data/documentation/…`)
-- **Human Interface Guidelines** — through `scripts/hig-fetch.sh` (`developer.apple.com/tutorials/data/design/…`)
+- **Human Interface Guidelines** — through `hig-fetch.sh` (`developer.apple.com/tutorials/data/design/…`)
 
 Both are the same DocC JSON API, so neither half is ever answered from a frozen local copy.
 
@@ -54,13 +54,12 @@ under `/design/` instead of `/documentation/`. Fetch the relevant section — ne
 HIG rule from memory:
 
 ```bash
-scripts/hig-fetch.sh typography     # renders the live page as Markdown
-scripts/hig-fetch.sh --list         # all 135 slugs
+hig-fetch.sh typography     # renders the live page as Markdown
+hig-fetch.sh --list         # all 135 slugs
 ```
 
-Paths are relative to this skill's own directory — prefix them with `$CLAUDE_PLUGIN_ROOT/skills/apple-dev-docs-and-principles/`
-when installed as a plugin, or with the skill folder under `~/.claude/skills/` when installed
-by hand. Requires `curl` and `jq`.
+The script ships in this plugin's `bin/`, which Claude Code adds to `PATH` — call it by name
+from any directory, no path prefix needed. Requires `curl` and `jq`.
 
 Look the slug up in `references/apple-hig-cheatsheet.md` — it maps design questions to slugs
 and lists every valid one. That file is a routing table, **not** a rule source: it deliberately
@@ -133,7 +132,7 @@ If the user request would violate HIG, Accessibility, or App Store Review Guidel
 | Red flag | What to do |
 |---|---|
 | About to write an Apple API you didn't search this session | Call `search_symbols` first |
-| Proposing UI without checking the relevant HIG section | `scripts/hig-fetch.sh <slug>` — slug via `references/apple-hig-cheatsheet.md` |
+| Proposing UI without checking the relevant HIG section | `hig-fetch.sh <slug>` — slug via `references/apple-hig-cheatsheet.md` |
 | About to state a spacing value, contrast ratio, or type size | You are quoting from memory. Fetch the section. |
 | Reaching for a third-party library when a first-party API exists | Search the docs, propose Apple-native |
 | Ignoring Dark Mode, Dynamic Type, or VoiceOver | Add them; they are non-negotiable |
@@ -166,7 +165,7 @@ If the user request would violate HIG, Accessibility, or App Store Review Guidel
 
 ## References
 
-- `scripts/hig-fetch.sh` — fetches a live HIG section from Apple's DocC JSON API and renders it as Markdown
+- `bin/hig-fetch.sh` — fetches a live HIG section from Apple's DocC JSON API and renders it as Markdown (on `PATH`, call as `hig-fetch.sh`)
 - `references/apple-hig-cheatsheet.md` — routing table: design question → HIG slug (no rules, no numbers)
 - `references/swiftui-best-practices.md` — modern SwiftUI patterns, anti-patterns, migration targets
 

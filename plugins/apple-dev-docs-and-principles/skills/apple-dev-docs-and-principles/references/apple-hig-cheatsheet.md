@@ -7,8 +7,8 @@
 ## How to fetch
 
 ```bash
-scripts/hig-fetch.sh <slug>     # renders the live page as Markdown
-scripts/hig-fetch.sh --list     # all 135 slugs, straight from Apple's index
+hig-fetch.sh <slug>     # renders the live page as Markdown
+hig-fetch.sh --list     # all 135 slugs, straight from Apple's index
 ```
 
 The script hits `developer.apple.com/tutorials/data/design/human-interface-guidelines/<slug>.json`
