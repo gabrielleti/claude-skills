@@ -7,9 +7,14 @@ description: Use when working on any Apple-platform project — writing or revie
 
 ## Overview
 
-This skill forces Claude to behave like a senior Apple-platform engineer who **never guesses an API** and **never ships UI that violates HIG**. Before any Apple-related code or design recommendation, Claude consults the live Apple Developer Documentation through an MCP server and validates the proposal against the Human Interface Guidelines, accessibility rules, and App Store Review Guidelines.
+This skill forces Claude to behave like a senior Apple-platform engineer who **never guesses an API** and **never ships UI that violates HIG**. Before any Apple-related code or design recommendation, Claude fetches both halves of Apple's documentation live:
 
-**Core principle:** No Apple symbol is written from memory. No UI is proposed without an HIG check.
+- **API reference** — through the Apple-Docs MCP server (`developer.apple.com/tutorials/data/documentation/…`)
+- **Human Interface Guidelines** — through `scripts/hig-fetch.sh` (`developer.apple.com/tutorials/data/design/…`)
+
+Both are the same DocC JSON API, so neither half is ever answered from a frozen local copy.
+
+**Core principle:** No Apple symbol is written from memory. No HIG rule is quoted from memory.
 
 ## When This Skill Is Active
 
@@ -42,26 +47,53 @@ Common tool names across community Apple-Docs MCPs: `search_symbols`, `get_docum
 
 Only proceed with a clearly marked caveat block after the user acknowledges.
 
-### Step 2 — Apply the HIG Compliance Checklist (internal validation)
+### Step 2 — Fetch the Live HIG Section, Then Validate
 
-Every UI proposal, SwiftUI view, or design decision must internally pass this checklist. Do not output results of this check; use it to filter your own output.
+The Human Interface Guidelines are served by the same DocC JSON API as the API reference,
+under `/design/` instead of `/documentation/`. Fetch the relevant section — never quote a
+HIG rule from memory:
 
-- **Layout**: 8-pt spacing grid · respects Safe Area, Dynamic Island, notch, home indicator · supports multitasking split view / Stage Manager · min hit target 44×44 pt
-- **Typography**: system font only (SF Pro / SF Pro Rounded / SF Mono / New York) unless user explicitly asks for a custom font · Dynamic Type supported for every text
-- **Iconography**: SF Symbols 6+ with correct rendering mode (monochrome / hierarchical / palette / multicolor) · variable-weight symbols where appropriate · never rasterize an SF Symbol
-- **Color**: semantic `Color.primary`, `Color.secondary`, `Color.accentColor`, Apple System Colors · full Light + Dark Mode parity · High-Contrast asset variants · WCAG AA contrast minimum
-- **Materials & Depth**: native `.regularMaterial`, `.ultraThinMaterial` etc. · no heavy custom shadows unless explicitly requested · vibrancy through materials, not opacity hacks
-- **Motion**: SwiftUI native animations only (`.spring`, `.snappy`, `.smooth`, `.bouncy`) · respect `accessibilityReduceMotion` · `matchedGeometryEffect` for hero transitions
-- **Feedback**: haptics via `UIImpactFeedbackGenerator` / SensoryFeedback modifier · respect user Haptic preference · visual + haptic + audio feedback where the platform expects it
-- **Accessibility**: full VoiceOver labels, hints, traits · Dynamic Type · Reduce Motion · Reduce Transparency · Increase Contrast · Switch Control · Voice Control · Assistive Touch
-- **HIG Pillars**: Hierarchy · Harmony · Consistency · Deference · Feedback · Delight
-- **Policy**: App Store Review Guidelines — privacy manifest (`PrivacyInfo.xcprivacy`), App Tracking Transparency prompt, no private APIs, no duplicated system UI, in-app purchases via StoreKit 2, subscriptions with clear terms
+```bash
+scripts/hig-fetch.sh typography     # renders the live page as Markdown
+scripts/hig-fetch.sh --list         # all 135 slugs
+```
 
-Condensed rule table: `references/apple-hig-cheatsheet.md`.
+Paths are relative to this skill's own directory — prefix them with `$CLAUDE_PLUGIN_ROOT/skills/apple-dev-docs-and-principles/`
+when installed as a plugin, or with the skill folder under `~/.claude/skills/` when installed
+by hand. Requires `curl` and `jq`.
+
+Look the slug up in `references/apple-hig-cheatsheet.md` — it maps design questions to slugs
+and lists every valid one. That file is a routing table, **not** a rule source: it deliberately
+contains no point values, spacing grids, or contrast ratios, because a stale number quoted
+with confidence is worse than no number.
+
+`WebFetch` on `developer.apple.com/design/...` does not work — those pages are
+JavaScript-rendered and return only the title. Use the script.
+
+Every UI proposal must pass these dimensions. Fetch the listed section for any dimension the
+proposal actually touches; use the result to filter your own output rather than reciting it.
+
+| Dimension | Fetch before deciding |
+|---|---|
+| Layout, spacing, safe areas, hit targets | `layout` |
+| Typography, Dynamic Type | `typography` |
+| Iconography, rendering modes, symbol effects | `sf-symbols` |
+| Color, Dark Mode parity, contrast | `color`, `dark-mode` |
+| Materials, depth, vibrancy | `materials` |
+| Motion, transitions, Reduce Motion | `motion` |
+| Haptics and multi-sensory feedback | `playing-haptics`, `feedback` |
+| VoiceOver, Switch Control, Voice Control | `accessibility`, `voiceover` |
+| The six pillars (Hierarchy, Harmony, Consistency, Deference, Feedback, Delight) | `design-principles` |
+
+**Policy** stays a memory check — App Store Review Guidelines are not in the DocC API:
+privacy manifest (`PrivacyInfo.xcprivacy`), App Tracking Transparency prompt, no private APIs,
+no duplicated system UI, in-app purchases via StoreKit 2, subscriptions with clear terms.
+When a policy question is decisive, say that you are working from memory and link the user to
+https://developer.apple.com/app-store/review/guidelines/ rather than asserting a paragraph.
 
 ### Step 3 — Prefer the Most Modern, Most Native API
 
-Default preferences (iOS 17+ / macOS 14+):
+Default preferences (iOS 26+ / macOS 26+):
 
 - SwiftUI > UIKit / AppKit (only fall back when user asks or feature is SwiftUI-missing)
 - `@Observable` macro > `ObservableObject`
@@ -84,7 +116,10 @@ Every major code block or design proposal MUST be prefixed with:
 
 Immediately below the badge, add a one-line citation of the consulted documentation, e.g.
 
-> _Ref: `SwiftUI.Chart` → `chartXSelection(value:)` (iOS 17+) · HIG → "Charts"_
+> _Ref: `SwiftUI.View` → `scrollEdgeEffectStyle(_:for:)` (iOS 26+) · HIG → `materials`, fetched live_
+
+Cite only what you actually fetched this session. If a claim rests on memory rather than a
+fetched page, say so in the same line instead of implying it was verified.
 
 If the user request would violate HIG, Accessibility, or App Store Review Guidelines:
 
@@ -98,13 +133,14 @@ If the user request would violate HIG, Accessibility, or App Store Review Guidel
 | Red flag | What to do |
 |---|---|
 | About to write an Apple API you didn't search this session | Call `search_symbols` first |
-| Proposing UI without checking the relevant HIG section | Open `references/apple-hig-cheatsheet.md` |
+| Proposing UI without checking the relevant HIG section | `scripts/hig-fetch.sh <slug>` — slug via `references/apple-hig-cheatsheet.md` |
+| About to state a spacing value, contrast ratio, or type size | You are quoting from memory. Fetch the section. |
 | Reaching for a third-party library when a first-party API exists | Search the docs, propose Apple-native |
 | Ignoring Dark Mode, Dynamic Type, or VoiceOver | Add them; they are non-negotiable |
 | Custom font, heavy drop shadow, non-system icon | Replace with SF Pro / Material / SF Symbol |
 | Copy-paste gesture / animation code from memory | Re-check in the live docs — Apple evolves yearly |
 
-## Quick Reference (iOS 17+ default surface)
+## Quick Reference (iOS 26+ default surface)
 
 | Need | Canonical API |
 |---|---|
@@ -130,9 +166,10 @@ If the user request would violate HIG, Accessibility, or App Store Review Guidel
 
 ## References
 
-- `references/apple-hig-cheatsheet.md` — condensed HIG rules, platform-specific pitfalls, common violations
+- `scripts/hig-fetch.sh` — fetches a live HIG section from Apple's DocC JSON API and renders it as Markdown
+- `references/apple-hig-cheatsheet.md` — routing table: design question → HIG slug (no rules, no numbers)
 - `references/swiftui-best-practices.md` — modern SwiftUI patterns, anti-patterns, migration targets
 
 ## The Bottom Line
 
-**No Apple symbol from memory. No UI without an HIG check. No response without ✅.**
+**No Apple symbol from memory. No HIG rule from memory. No response without ✅.**

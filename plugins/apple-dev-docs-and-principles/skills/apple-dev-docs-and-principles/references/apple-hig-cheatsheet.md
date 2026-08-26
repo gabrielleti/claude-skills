@@ -1,110 +1,95 @@
-# Apple HIG Cheatsheet
+# Apple HIG — Routing Table
 
-> Condensed working reference. Authoritative source: https://developer.apple.com/design/human-interface-guidelines
+> **This file is a map, not a source of truth.** It tells you *which* HIG page answers a
+> question; the answer itself is always fetched live from Apple. Never quote a rule from
+> memory or from this file — fetch the page and quote that.
 
-## Foundations
+## How to fetch
 
-| Topic | Rule |
+```bash
+scripts/hig-fetch.sh <slug>     # renders the live page as Markdown
+scripts/hig-fetch.sh --list     # all 135 slugs, straight from Apple's index
+```
+
+The script hits `developer.apple.com/tutorials/data/design/human-interface-guidelines/<slug>.json`
+— the same DocC JSON API the API reference uses, just under `/design/` instead of
+`/documentation/`. Nothing is cached; every call is live.
+
+Do not use WebFetch on `developer.apple.com/design/...` — those pages are JavaScript-rendered
+and return only the page title.
+
+## Question → slug
+
+| When you're deciding… | Fetch |
 |---|---|
-| Spacing | 8-pt grid (4-pt sub-grid for tight layouts) |
-| Hit target | ≥ 44 × 44 pt for any tappable element |
-| Safe area | Always respect; use `.ignoresSafeArea(edges:)` only when visually intentional |
-| Corner radius | Match the platform: iOS buttons ≈ 8–12 pt, cards ≈ 16–20 pt, containers follow device corner (continuous corner) |
-| Margins | Use `.padding()` defaults or `ViewThatFits`; horizontal page margin ≈ 16–20 pt on iPhone |
+| Font sizes, text styles, Dynamic Type | `typography` |
+| Colors, semantic colors, contrast | `color`, `dark-mode` |
+| Spacing, margins, safe areas, hit targets | `layout` |
+| Blur, vibrancy, translucency | `materials` |
+| Animation, transitions, Reduce Motion | `motion` |
+| Icons in the UI | `sf-symbols`, `icons` |
+| The app icon itself | `app-icons` |
+| VoiceOver, Dynamic Type, contrast, Switch Control | `accessibility`, `voiceover`, `inclusion` |
+| Haptic feedback | `playing-haptics` |
+| Progress, spinners, skeleton states | `loading` |
+| Success/error/confirmation feedback | `feedback` |
+| First-run experience, permission priming | `onboarding`, `launching` |
+| Sheets, popovers, alerts, full-screen covers | `modality`, `presentation` |
+| Tab bars, sidebars, navigation | `tab-bars`, `sidebars`, `navigation-and-search` |
+| Buttons, toggles, sliders, pickers | `buttons`, `toggles`, `sliders`, `selection-and-input` |
+| Forms and text entry | `entering-data`, `keyboards`, `token-fields` |
+| Charts and data visualization | `charting-data` |
+| Live Activities, Dynamic Island | `live-activities`, `live-viewing-apps` |
+| Widgets and complications | `widgets`, `complications` |
+| Subscriptions, paywalls, purchases | `in-app-purchase` |
+| Health data | `healthkit` |
+| Camera and photo capture | `camera-control`, `photo-editing` |
+| AI/ML features | `generative-ai`, `machine-learning` |
+| Privacy prompts, tracking, data use | `privacy` |
+| Notifications | `managing-notifications` |
+| Search | `searching`, `search-fields` |
+| Settings screens | `settings` |
+| Platform conventions | `designing-for-ios`, `designing-for-ipados`, `designing-for-macos`, `designing-for-watchos`, `designing-for-visionos`, `designing-for-tvos` |
+| The six HIG pillars | `design-principles` |
 
-## Typography
+## All slugs
 
-- **System fonts only** unless explicitly approved: SF Pro, SF Pro Rounded, SF Mono, New York.
-- Use **text styles** (`.largeTitle`, `.title`, `.headline`, `.body`, `.callout`, `.subheadline`, `.footnote`, `.caption`, `.caption2`) — never raw point sizes.
-- **Dynamic Type**: every text element must scale. Test at `accessibility5` size.
-- Line length: 40–70 characters; use `.multilineTextAlignment(.leading)` by default.
-- Localization: right-to-left mirroring, wider German strings (+35 %), avoid fixed widths.
+Every one of these resolves; run `--list` to re-derive the set from Apple.
 
-## Color
+**Foundations** — `accessibility` `app-icons` `branding` `color` `dark-mode` `foundations`
+`icons` `images` `immersive-experiences` `inclusion` `layout` `materials` `motion` `privacy`
+`right-to-left` `sf-symbols` `spatial-layout` `typography` `writing`
 
-- **Semantic first**: `Color.primary`, `.secondary`, `.accentColor`, `.tint`, `Color(.systemBackground)`.
-- **System palette**: `.red`, `.orange`, `.yellow`, `.green`, `.mint`, `.teal`, `.cyan`, `.blue`, `.indigo`, `.purple`, `.pink`, `.brown`, `.gray`.
-- **Dark Mode parity** is mandatory. Supply asset catalog variants for every brand color.
-- **High-Contrast variants** for every custom color.
-- **Contrast**: text ≥ 4.5:1 (body) / 3:1 (large text); non-text UI ≥ 3:1.
-- Never use color as the **only** indicator — always pair with label, icon, or shape.
+**Components** — `activity-views` `buttons` `components` `content` `context-menus`
+`disclosure-controls` `dock-menus` `layout-and-organization` `menus` `menus-and-actions`
+`navigation-and-search` `ornaments` `page-controls` `pop-up-buttons` `presentation`
+`pull-down-buttons` `scroll-views` `search-fields` `selection-and-input` `sidebars` `sliders`
+`split-views` `status` `system-experiences` `tab-bars` `tab-views` `the-menu-bar` `toggles`
+`token-fields` `toolbars` `windows`
 
-## Iconography
+**Patterns** — `charting-data` `collaboration-and-sharing` `drag-and-drop` `entering-data`
+`feedback` `file-management` `going-full-screen` `launching` `live-viewing-apps` `loading`
+`managing-accounts` `managing-notifications` `modality` `multitasking` `offering-help`
+`onboarding` `patterns` `playing-audio` `playing-haptics` `playing-video` `printing`
+`ratings-and-reviews` `searching` `settings` `undo-and-redo` `workouts`
 
-- **SF Symbols 6+** — 6000+ symbols, variable weights, hierarchical/palette/multicolor.
-- Use `Image(systemName:)`; never rasterize.
-- Rendering mode must match the context: monochrome for single-color, palette for multi-hue brand, hierarchical for depth.
-- Animate with `.symbolEffect(.bounce, options: .nonRepeating)`, `.pulse`, `.variableColor.iterative`.
-- Custom icons: export as PDF (single scale) or SVG, respect platform baseline (17 pt for navbar, 28 pt for tab bar).
+**Inputs** — `action-button` `apple-pencil-and-scribble` `camera-control` `digital-crown`
+`eyes` `focus-and-selection` `game-controls` `gestures` `gyro-and-accelerometer` `inputs`
+`keyboards` `nearby-interactions` `pointing-devices` `remotes`
 
-## Layout & Navigation (per platform)
+**Technologies** — `airplay` `always-on` `app-clips` `app-shortcuts` `apple-pay`
+`augmented-reality` `carekit` `carplay` `complications` `game-center` `generative-ai`
+`healthkit` `home-screen-quick-actions` `homekit` `icloud` `id-verifier`
+`imessage-apps-and-stickers` `in-app-purchase` `live-activities` `live-photos`
+`mac-catalyst` `machine-learning` `maps` `nfc` `photo-editing` `researchkit` `shareplay`
+`shazamkit` `sign-in-with-apple` `siri` `tap-to-pay-on-iphone` `technologies` `voiceover`
+`wallet` `widgets`
 
-### iOS / iPadOS
-- `NavigationStack` for push flows, `NavigationSplitView` for multi-column (iPad, Mac Catalyst).
-- `TabView` for top-level switching (3–5 tabs, never more than 5 on iPhone).
-- Dynamic Island: opt-in via `ActivityKit`; reserve for user-initiated live tasks.
-- Device safe areas: notch, Dynamic Island, home indicator (34 pt bottom).
-- iPad: multitasking (Split View, Slide Over, Stage Manager); test at 1/2, 1/3, 2/3 widths.
+**Platforms & meta** — `design-principles` `designing-for-games` `designing-for-ios`
+`designing-for-ipados` `designing-for-macos` `designing-for-tvos` `designing-for-visionos`
+`designing-for-watchos` `getting-started` `snippets`
 
-### macOS
-- Use toolbars, sidebars, inspectors. `NavigationSplitView` with 3 columns is canonical.
-- Menu bar commands via `CommandMenu`.
-- Window sizing: minWidth, idealWidth, maxWidth on `WindowGroup`.
+## What this file deliberately does not contain
 
-### watchOS
-- Minimal depth; use `TabView(.verticalPage)` or scroll.
-- Digital Crown support: `.focusable()` + `.digitalCrownRotation`.
-- Always-On Display: reduce brightness via `.luminanceReduced` environment.
-
-### visionOS
-- Use 3D materials (`.glassBackgroundEffect()`), ornaments, `RealityView`.
-- Respect eye comfort: avoid small text, low contrast; min 20 pt.
-- Hover effects are automatic — don't override unless needed.
-
-### tvOS
-- Focus engine drives navigation; use `.focusable()`, `.focusSection()`.
-- Parallax on focused items; don't re-implement manually.
-
-## Motion & Feedback
-
-- Native SwiftUI animations only: `.animation(.spring)`, `.snappy`, `.smooth`, `.bouncy`, `.interactiveSpring`.
-- Duration default: 0.3–0.5 s; never exceed 1 s for functional animation.
-- **Respect `accessibilityReduceMotion`** — degrade to crossfade or no animation.
-- Haptics via `.sensoryFeedback(.success, trigger:)`; respect user's haptic toggle.
-- Sound: subtle, optional, never the sole feedback channel.
-
-## Accessibility (non-negotiable)
-
-| Feature | SwiftUI API |
-|---|---|
-| VoiceOver label | `.accessibilityLabel(_:)` |
-| VoiceOver hint | `.accessibilityHint(_:)` |
-| Traits | `.accessibilityAddTraits(.isButton)` |
-| Group elements | `.accessibilityElement(children: .combine)` |
-| Announce changes | `AccessibilityNotification.Announcement(...).post()` |
-| Dynamic Type scaling | automatic with text styles; cap with `.dynamicTypeSize(...DynamicTypeSize.accessibility3)` |
-| Reduce Motion | check `@Environment(\.accessibilityReduceMotion)` |
-| Reduce Transparency | check `@Environment(\.accessibilityReduceTransparency)` |
-| Differentiate without color | check `@Environment(\.accessibilityDifferentiateWithoutColor)` |
-
-## App Store Review Guidelines — top violation risks
-
-- **2.1 App Completeness** — no crashes, placeholder content, broken links.
-- **2.3 Accurate Metadata** — screenshots must match shipped UI.
-- **3.1.1** — in-app purchases only via StoreKit for digital goods.
-- **4.0 Design** — copying system UI or Apple apps is rejected.
-- **5.1.1 Privacy** — privacy manifest (`PrivacyInfo.xcprivacy`), nutrition labels, tracking prompt (ATT).
-- **5.1.2 Data Use** — "Sign in with Apple" required if any third-party social sign-in is offered.
-
-## Common Pitfalls
-
-- ❌ Hard-coded `Color(red: 0.9, ...)` without Dark Mode variant
-- ❌ `Font.custom("Helvetica", size: 15)` — breaks Dynamic Type
-- ❌ Custom back chevron in NavigationStack
-- ❌ Non-system tab bar icons for standard actions (Home, Search, Profile)
-- ❌ Modal that blocks the status bar
-- ❌ Drop shadows instead of Material
-- ❌ `.onTapGesture` on non-button semantics without `.accessibilityAddTraits(.isButton)`
-- ❌ `print(...)` in production; use `Logger`
-- ❌ Force-unwrap optionals across the UI layer
-- ❌ Blocking the main thread with synchronous I/O — use `.task`
+Point values, spacing grids, minimum tap targets, contrast ratios, font size tables. Those
+change, and a stale number quoted with confidence is worse than no number. Fetch the page.

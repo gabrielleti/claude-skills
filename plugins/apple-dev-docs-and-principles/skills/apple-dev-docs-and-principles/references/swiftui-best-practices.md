@@ -1,6 +1,10 @@
-# SwiftUI Best Practices (iOS 17+ / iOS 18 / iOS 26 target)
+# SwiftUI Best Practices (iOS 26+ target)
 
 > Prefer SwiftUI over UIKit. Prefer the newest stable API over backports. Migrate aggressively.
+>
+> These are curated opinions, not fetched documentation — they cannot be verified against
+> Apple the way API signatures and HIG rules can. Whenever one of these entries decides a
+> question, confirm the API against the live docs before writing code.
 
 ## Observation & State
 
@@ -67,7 +71,7 @@ Never call `DispatchQueue.main.async` from Swift concurrency code — it breaks 
 | Use | Instead of |
 |---|---|
 | `.animation(.spring, value: state)` | `withAnimation { ... }` at call site when the source of change is `state` |
-| `.snappy`, `.bouncy`, `.smooth` (iOS 17 presets) | custom spring constants |
+| `.snappy`, `.bouncy`, `.smooth` | custom spring constants |
 | `matchedGeometryEffect(id:in:)` | two separate animations of position + size |
 | `PhaseAnimator` / `KeyframeAnimator` | timer-driven manual keyframes |
 | `.transition(.symbolEffect)` on SF Symbols | crossfade hack |
@@ -81,7 +85,7 @@ Always respect `@Environment(\.accessibilityReduceMotion)`.
 .sensoryFeedback(.impact(weight: .medium), trigger: buttonTaps)
 ```
 
-Use `UIImpactFeedbackGenerator` only when you need pre-iOS 17 support.
+`UIImpactFeedbackGenerator` is a backport crutch — at an iOS 26 minimum there is no reason to reach for it.
 
 ## Lists & Scroll
 
