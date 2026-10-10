@@ -7,11 +7,13 @@ Hält den Arbeitsstand über `/compact`, `/clear` und neue Sitzungen hinweg fest
 
 ## Installation
 
-Ein Befehl im Terminal (Claude Code ab 2.1.275; registriert den Marketplace bei Bedarf, frischt einen veralteten auf, ist wiederholbar):
+Ein Befehl im Terminal (Claude Code ab 2.1.292, Version mit `claude --version` prüfen; registriert den Marketplace bei Bedarf, frischt einen veralteten auf, ist wiederholbar):
 
 ```bash
 claude plugin install arbeitsstand --marketplace gabrielleti/claude-skills
 ```
+
+Ältere Claude-Code-Versionen kennen `--marketplace` nicht. Dort zuerst `claude plugin marketplace add gabrielleti/claude-skills` (nur wenn `claude plugin marketplace list` den Marketplace `gabrielleti` noch nicht zeigt), dann den Befehl aus Schritt 2 unten.
 
 Wirkt ab der nächsten Sitzung, im User-Scope für alle Projekte.
 
@@ -41,4 +43,4 @@ claude plugin marketplace update gabrielleti && claude plugin install arbeitssta
 In `~/.claude/settings.json` unter `"env"`:
 
 - `GIT_STAND_BEKANNT`: Pfade (relativ zum Repo, durch Leerzeichen getrennt), die absichtlich lokal geändert bleiben (z. B. eine eingecheckte Konfigurationsdatei mit lokalen Anpassungen). Sie werden nur gezählt.
-- `OFFENE_SCHRITTE_DATEI`: absoluter Pfad (oder `~/…`) der Liste statt des Auto-Memory-Ordners; ein relativer Pfad wird ignoriert. Außerhalb des Auto-Memory-Ordners fragt Claude vor jedem Schreiben nach – das ist dann erwartet.
+- `OFFENE_SCHRITTE_DATEI`: absoluter Pfad (oder `~/…`) der Liste statt des Auto-Memory-Ordners; ein relativer Pfad wird ignoriert. Außerhalb des Auto-Memory-Ordners fragt Claude vor jedem Schreiben nach – das ist dann erwartet. Auch nötig, wenn Claude mit `--settings <datei>` gestartet wird und diese Datei `autoMemoryDirectory` setzt: Hooks sehen die `--settings`-Datei nicht und würden sonst den Standardordner nennen.

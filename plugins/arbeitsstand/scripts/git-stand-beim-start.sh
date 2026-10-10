@@ -293,14 +293,33 @@ git_stand() {
   fi
 
   # --- other local branches with unpushed commits ---
-  ung=$(g for-each-ref --format='%(refname:short)%09%(upstream:track)' refs/heads 2>/dev/null |
-    awk -F '\t' -v aktuell="$kopf" -v max="$MAX_BRANCHES" '
-      $1 != aktuell && $2 ~ /ahead/ {
-        n = $2; sub(/.*ahead /, "", n); sub(/[^0-9].*/, "", n)
-        c++
-        if (c <= max) liste = liste (liste == "" ? "" : ", ") $1 " (+" n ")"
-      }
-      END { if (c > 0) { if (c > max) liste = liste ", ... +" (c - max); print liste } }')
+  # Tracked branches report "ahead N". A branch without an upstream was never pushed and
+  # upstream:track is empty for it, so count its commits that are on no remote instead.
+  # ":" cannot occur in ref names, so empty fields survive the split. Newest 60 branches only.
+  ung=$(g for-each-ref --sort=-committerdate --count=60 \
+    --format='%(refname:short):%(upstream):%(upstream:track)' refs/heads 2>/dev/null |
+    while IFS=: read -r zweig oben spur; do
+      [ -n "$zweig" ] && [ "$zweig" != "$kopf" ] || continue
+      if [ -n "$oben" ]; then
+        # leading "(" in the pattern: macOS bash 3.2 misparses "*ahead*)" inside $(...)
+        case "$spur" in
+          (*ahead*) n=${spur#*ahead }; n=${n%%[!0-9]*}; printf '1 %s (+%s)\n' "$zweig" "$n" ;;
+        esac
+      else
+        n=$(g rev-list --count "refs/heads/$zweig" --not --remotes 2>/dev/null) || continue
+        [ "${n:-0}" -gt 0 ] && printf '2 %s (+%s, ohne Upstream)\n' "$zweig" "$n"
+      fi
+    done |
+    awk -v max="$MAX_BRANCHES" '
+      # tracked branches that are ahead first, then never-pushed ones
+      { e = substr($0, 3); if (substr($0, 1, 1) == "1") a[++na] = e; else b[++nb] = e }
+      END {
+        for (i = 1; i <= na; i++) z[++c] = a[i]
+        for (i = 1; i <= nb; i++) z[++c] = b[i]
+        for (i = 1; i <= c && i <= max; i++) liste = liste (i > 1 ? ", " : "") z[i]
+        if (c > max) liste = liste ", ... +" (c - max)
+        if (c > 0) print liste
+      }')
   [ -n "$ung" ] && printf '%s\n' "Ungepushte Commits auch auf: $ung"
 
   # --- reminder ---
