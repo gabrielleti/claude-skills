@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Gabriel Danilet's Claude Code Skills — gebündelter Marketplace",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "repository": "https://github.com/gabrielleti/claude-skills"
   },
   "plugins": [
@@ -34,6 +34,15 @@
       "strict": false,
       "skills": [
         "./skills/casa-de-padel-doc"
+      ]
+    },
+    {
+      "name": "arbeitsstand",
+      "description": "Arbeitsstand über Sitzungen hinweg: Skill offene-schritte (wer ist dran; Liste im Auto-Memory-Ordner, geteilt über alle Worktrees) plus Hooks, die beim Start, nach /clear und nach /compact die offenen Punkte und beim Start und nach /clear den lokalen Git-Stand (Branch, vor/hinter, Uncommittetes, Worktrees nach Herkunft) einspielen.",
+      "source": "./plugins/arbeitsstand",
+      "strict": false,
+      "skills": [
+        "./skills/offene-schritte"
       ]
     }
   ]

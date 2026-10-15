@@ -1,0 +1,38 @@
+{
+  "description": "arbeitsstand: offene Schritte und Git-Stand beim Sitzungsstart einspielen, offene Schritte durch /compact retten",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/offene-schritte-einspielen.sh\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/git-stand-beim-start.sh\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Übernimm alle noch offenen Schritte (Für Gabriel / Für Claude / Wartet auf) mit Issue- und PR-Nummern wörtlich in die Zusammenfassung. Markiere Schritte, die noch nicht in der Liste des Skills arbeitsstand:offene-schritte stehen, mit NOCH NICHT IN DER LISTE.'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
