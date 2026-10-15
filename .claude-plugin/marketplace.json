@@ -44,6 +44,11 @@
       "skills": [
         "./skills/offene-schritte"
       ]
+    },
+    {
+      "name": "merge-ampel",
+      "description": "Mod: je offenem eigenen PR eine Ampel (rot blockiert, gelb wartet, grün merge-bereit) als Band über dem Prompt; /merge-ampel zeigt im Seitenbereich CI, Konflikte, offene Review-Threads und unerledigte Punkte unter „Vor dem Merge …“. Braucht CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 und gh.",
+      "source": "./plugins/merge-ampel"
     }
   ]
 }
