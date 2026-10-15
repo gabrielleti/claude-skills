@@ -1,0 +1,11 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "merge-ampel",
+  "version": "0.1.0",
+  "description": "Merge-Ampel: zeigt je PR, was bis zum Merge noch fehlt",
+  "author": {
+    "name": "Gabriel Thomas Danilet",
+    "email": "danilet.gabriel@yahoo.de"
+  },
+  "types": "./types/index.d.ts"
+}

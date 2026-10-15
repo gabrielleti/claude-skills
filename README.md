@@ -16,6 +16,7 @@ Danach beliebige Plugins installieren:
 /plugin install austrian-tax-deductions@gabrielleti
 /plugin install apple-dev-docs-and-principles@gabrielleti
 /plugin install arbeitsstand@gabrielleti
+/plugin install merge-ampel@gabrielleti
 ```
 
 ## Enthaltene Plugins
@@ -25,6 +26,7 @@ Danach beliebige Plugins installieren:
 | [`austrian-tax-deductions`](./plugins/austrian-tax-deductions) | Österreichische Steuerabsetzungen — L1, E1/E1a, E1b, E1kv; FinanzOnline-Walkthroughs |
 | [`apple-dev-docs-and-principles`](./plugins/apple-dev-docs-and-principles) | Apple-Plattform-Arbeit: keine API aus dem Gedächtnis, live `developer.apple.com` via MCP, strikte HIG/Accessibility/App-Store-Review-Compliance |
 | [`arbeitsstand`](./plugins/arbeitsstand) | Offene Schritte (wer ist dran) über `/compact`, `/clear` und neue Sitzungen hinweg + Git-Stand beim Start (Branch, Uncommittetes, Worktrees nach Herkunft) |
+| [`merge-ampel`](./plugins/merge-ampel) | Mod: Ampel je offenem eigenen PR über dem Prompt, `/merge-ampel` zeigt, was bis zum Merge fehlt |
 
 ## Neuen Skill hinzufügen
 
